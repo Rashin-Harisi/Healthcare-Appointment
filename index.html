@@ -4,10 +4,315 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="output.css" rel="stylesheet"/>
-    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css"
+    />
+    <title>Clinic Health</title>
 </head>
-<body>
-    <p class="text-red-500">Hi from healthcare system.</p>
+<body
+    class="text-white bg-black w-[90vw] h-[90vh] m-auto mt-6 border border-dashed"
+  >
+    <div id="formContainer" class="w-full h-full">
+      <div class="flex justify-center items-center gap-2 mt-4">
+        <svg
+          version="1.1"
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 512 512"
+          xml:space="preserve"
+          width="50px"
+          height="50px"
+          fill="#000000"
+        >
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            <polygon
+              style="fill: #ffcc3d"
+              points="8.17,152.042 8.17,507.915 105.805,507.915 256,388.085 406.195,507.915 503.83,507.915 503.83,152.042 406.195,152.042 256,271.334 105.805,152.042 "
+            ></polygon>
+            <g>
+              <polygon
+                style="fill: #ffbb02"
+                points="354.851,152.042 373.514,507.915 406.195,507.915 406.195,152.042 "
+              ></polygon>
+              <polygon
+                style="fill: #ffbb02"
+                points="157.149,152.042 138.486,507.915 105.805,507.915 105.805,152.042 "
+              ></polygon>
+            </g>
+            <polygon
+              style="fill: #ffcc3d"
+              points="138.486,7.898 138.486,40.579 256,51.472 373.514,40.579 373.514,7.898 "
+            ></polygon>
+            <polygon
+              style="fill: #ffdd77"
+              points="138.486,503.557 186.281,503.557 256,481.77 325.719,503.557 373.514,503.557 373.514,40.579 138.486,40.579 "
+            ></polygon>
+            <polygon
+              style="fill: #ff7a2f"
+              points="325.719,103.356 279.282,103.356 279.282,56.919 232.718,56.919 232.718,103.356 186.281,103.356 186.281,149.92 232.718,149.92 232.718,196.357 279.282,196.357 279.282,149.92 325.719,149.92 "
+            ></polygon>
+            <polygon
+              style="fill: #e4f2ff"
+              points="186.281,333.427 186.281,504.647 256,504.647 277.787,419.037 256,333.427 "
+            ></polygon>
+            <rect
+              x="256"
+              y="333.432"
+              style="fill: #c8e6ff"
+              width="69.719"
+              height="171.215"
+            ></rect>
+            <g>
+              <path
+                style="fill: #1d2328"
+                d="M325.719,94.232h-38.267V55.965c0-4.512-3.658-8.17-8.17-8.17h-46.564 c-4.512,0-8.17,3.658-8.17,8.17v38.267h-38.267c-4.512,0-8.17,3.658-8.17,8.17v46.564c0,4.512,3.658,8.17,8.17,8.17h38.267v38.267 c0,4.512,3.658,8.17,8.17,8.17h46.564c4.512,0,8.17-3.658,8.17-8.17v-38.267h38.267c4.513,0,8.17-3.658,8.17-8.17v-46.564 C333.889,97.89,330.232,94.232,325.719,94.232z M317.549,140.796h-38.267c-4.513,0-8.17,3.658-8.17,8.17v38.267h-30.223v-38.267 c0-4.512-3.658-8.17-8.17-8.17h-38.267v-30.223h38.267c4.512,0,8.17-3.658,8.17-8.17V64.135h30.223v38.267 c0,4.512,3.657,8.17,8.17,8.17h38.267V140.796z"
+              ></path>
+              <path
+                style="fill: #1d2328"
+                d="M438.673,450.769c4.513,0,8.17-3.658,8.17-8.17v-36.983c0-4.512-3.657-8.17-8.17-8.17 c-4.513,0-8.17,3.658-8.17,8.17v36.983C430.503,447.111,434.16,450.769,438.673,450.769z"
+              ></path>
+              <path
+                style="fill: #1d2328"
+                d="M438.673,352.556c4.513,0,8.17-3.658,8.17-8.17v-36.983c0-4.512-3.657-8.17-8.17-8.17 c-4.513,0-8.17,3.658-8.17,8.17v36.983C430.503,348.897,434.16,352.556,438.673,352.556z"
+              ></path>
+              <path
+                style="fill: #1d2328"
+                d="M438.673,254.341c4.513,0,8.17-3.658,8.17-8.17v-36.983c0-4.512-3.657-8.17-8.17-8.17 c-4.513,0-8.17,3.658-8.17,8.17v36.983C430.503,250.684,434.16,254.341,438.673,254.341z"
+              ></path>
+              <path
+                style="fill: #1d2328"
+                d="M73.328,397.446c-4.512,0-8.17,3.658-8.17,8.17v36.983c0,4.512,3.658,8.17,8.17,8.17 c4.512,0,8.17-3.658,8.17-8.17v-36.983C81.498,401.104,77.84,397.446,73.328,397.446z"
+              ></path>
+              <path
+                style="fill: #1d2328"
+                d="M73.328,299.231c-4.512,0-8.17,3.658-8.17,8.17v36.983c0,4.512,3.658,8.17,8.17,8.17 c4.512,0,8.17-3.658,8.17-8.17v-36.983C81.498,302.889,77.84,299.231,73.328,299.231z"
+              ></path>
+              <path
+                style="fill: #1d2328"
+                d="M73.328,201.018c-4.512,0-8.17,3.658-8.17,8.17v36.983c0,4.512,3.658,8.17,8.17,8.17 c4.512,0,8.17-3.658,8.17-8.17v-36.983C81.498,204.676,77.84,201.018,73.328,201.018z"
+              ></path>
+              <path
+                style="fill: #1d2328"
+                d="M503.83,139.787H381.684V16.34h2.723c4.513,0,8.17-3.658,8.17-8.17S388.921,0,384.407,0H127.593 c-4.512,0-8.17,3.658-8.17,8.17s3.658,8.17,8.17,8.17h2.723v123.446H8.17c-4.512,0-8.17,3.658-8.17,8.17V503.83 c0,4.512,3.658,8.17,8.17,8.17h495.66c4.513,0,8.17-3.658,8.17-8.17V147.957C512,143.445,508.343,139.787,503.83,139.787z M16.34,156.127h113.976V495.66H16.34V156.127z M317.549,340.781V495.66H264.17V340.781H317.549z M247.83,495.66h-53.379V340.781 h53.379V495.66z M495.66,495.66H381.684V213.319c0-4.512-3.657-8.17-8.17-8.17c-4.513,0-8.17,3.658-8.17,8.17V495.66h-31.454 V332.61c0-4.512-3.657-8.17-8.17-8.17H186.281c-4.512,0-8.17,3.658-8.17,8.17V495.66h-31.454V16.34h218.687v164.298 c0,4.512,3.657,8.17,8.17,8.17c4.513,0,8.17-3.658,8.17-8.17v-24.511H495.66V495.66z"
+              ></path>
+            </g>
+          </g>
+        </svg>
+        <p>Welcome to the Clinic Health app</p>
+      </div>
+      <form
+        class="flex flex-col gap-4 w-[700px] mx-auto mt-[50px]"
+        id="RegistrationForm"
+      >
+        <fieldset class="border">
+          <legend class="pl-1 pr-1">Registration From</legend>
+          <fieldset class="w-[500px] ml-[100px]">
+            <legend>Name</legend>
+            <input
+              type="text"
+              id="nameRegistration"
+              required
+              class="text-black w-[450px] ml-[25px] my-[10px] pl-5"
+              placeholder="Please enter your full name"
+            />
+          </fieldset>
+          <fieldset class="w-[500px] ml-[100px]">
+            <legend>Email</legend>
+            <input
+              type="email"
+              id="emailRegistration"
+              required
+              class="text-black w-[450px] ml-[25px] my-[10px] pl-5"
+              placeholder="Please enter your email"
+            />
+          </fieldset>
+          <fieldset class="w-[500px] ml-[100px]">
+            <legend>Password</legend>
+            <input
+              type="password"
+              id="passwordRegistration"
+              required
+              class="text-black w-[450px] ml-[25px] my-[10px] pl-5"
+              placeholder="ex. 123"
+            />
+          </fieldset>
+          <button
+            class="text-black bg-white w-[250px] mx-[225px] rounded mt-3 mb-10 h-9"
+            type="submit"
+            id="registerButton"
+          >
+            Register
+          </button>
+        </fieldset>
+        <p class="text-center">
+          You've already registered,
+          <a
+            href="#"
+            class="text-blue-500 hover:text-blue-700 underline"
+            id="registration"
+            >click here.</a
+          >
+        </p>
+      </form>
+      <form
+        class="flex flex-col gap-4 w-[700px] mx-auto mt-[50px] hidden"
+        id="loginForm"
+      >
+        <fieldset class="border">
+          <legend class="pl-1 pr-1">Login From</legend>
+          <fieldset class="w-[500px] ml-[100px]">
+            <legend>Email</legend>
+            <input
+              type="email"
+              id="emailLogin"
+              required
+              class="text-black w-[450px] ml-[25px] my-[10px] pl-5"
+              placeholder="Please enter your email"
+            />
+          </fieldset>
+          <fieldset class="w-[500px] ml-[100px]">
+            <legend>Password</legend>
+            <input
+              type="password"
+              id="passwordLogin"
+              required
+              class="text-black w-[450px] ml-[25px] my-[10px] pl-5"
+              placeholder="ex. 123"
+            />
+          </fieldset>
+          <button
+            class="text-black bg-white w-[250px] mx-[225px] rounded mt-3 mb-10 h-9"
+            type="submit"
+            id="loginButton"
+          >
+            Login
+          </button>
+        </fieldset>
+        <p class="text-center">
+          You've not registered yet',
+          <a
+            href="#"
+            class="text-blue-500 hover:text-blue-700 underline"
+            id="login"
+            >click here.</a
+          >
+        </p>
+      </form>
+    </div>
+    <div id="appContainer" class="w-full h-full flex hidden">
+      <div
+        id="leftMenu"
+        class="w-[20%] border-r flex flex-col h-full text-center"
+      >
+        <p class="h-[80px] border-b flex justify-center items-center">
+          User <span id="userInfo" class="ml-[5px]"></span>
+        </p>
+        <a
+          href="#"
+          id="appointmentForm"
+          class="h-[60px] border-b flex justify-center items-center"
+          >Appointment</a
+        >
+        <a
+          href="#"
+          id="patientsList"
+          class="h-[60px] border-b flex justify-center items-center"
+          >All Patients</a
+        >
+        <ul id="doctorsList"></ul>
+      </div>
+      <div id="main" class="w-[80vw]">
+        <div id="form" class="w-[100%] h-[100%] overflow-auto">
+          <form class="flex flex-col gap-[100px] ">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-5 w-[85%] mx-auto mt-[25px] overflow-auto">
+              <fieldset class="border w-[350px]">
+                <legend class="px-2">Patient Name</legend>
+                <input
+                  type="text"
+                  id="patientName"
+                  required
+                  placeholder="ex. John Doe"
+                  class="w-[330px] ml-[10px] mb-[10px] text-black"
+                />
+              </fieldset>
+              <fieldset class="border w-[350px]">
+                <legend class="px-2">Insurance Number</legend>
+                <input
+                  type="number"
+                  id="insuranceNumber"
+                  required
+                  placeholder="ex. 123456789"
+                  class="w-[330px] ml-[10px] mb-[10px] text-black"
+                />
+              </fieldset>
+              <fieldset class="border w-[350px]">
+                <legend class="px-2">Doctor</legend>
+                <select
+                  id="doctorsOption"
+                  class="ml-[10px] mb-[10px] w-[330px] text-black"
+                ></select>
+              </fieldset>
+              <fieldset class="border w-[350px]">
+                <legend class="px-2">Service</legend>
+                <select
+                  id="serviceOption"
+                  class="ml-[10px] mb-[10px] w-[330px] text-black"
+                ></select>
+              </fieldset>
+              <fieldset class="border w-[350px]">
+                <legend class="px-2">Date</legend>
+                <input
+                  type="text"
+                  id="date"
+                  required
+                  class="w-[330px] ml-[10px] mb-[10px] text-black"
+                />
+              </fieldset>
+              <fieldset class="border w-[350px]">
+                <legend class="px-2">Time</legend>
+                <input
+                  type="time"
+                  required
+                  id="time"
+                  class="w-[330px] ml-[10px] mb-[10px] text-black"
+                />
+              </fieldset>
+            </div>
+            <button type="submit" id="submitButton" class="border rounded-full w-[350px] mx-auto h-[50px]">Submit</button>
+          </form>
+        </div>
+        <div id="tables" class="w-[100%] h-[100%] overflow-auto hidden">
+          <table class="w-[90%] mx-auto mt-[15px]">
+            <tr class="border">
+              <th class="w-[150px]">Name</th>
+              <th>Insurance N.</th>
+              <th>Folder N.</th>
+              <th>Doctor Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th class="w-[150px]">Service</th>
+              <th>Edit / Cancel</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
     <script src="render.js"></script>
-</body>
+    <script src="pikaday.js"></script>
+    <script>
+      var picker = new Pikaday({
+        field: document.getElementById("date"),
+      });
+    </script>
+  </body>
 </html>

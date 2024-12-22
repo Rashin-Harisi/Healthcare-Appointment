@@ -6,11 +6,11 @@ const { account } = require('./appwrite');
 const registerUser = async (email, password, name) => {
     try {
         const result = await account.create('unique()', email, password, name);
-        console.log('User registered:', result);
-        return result;
+        console.log('User registered');
+        return {success:true, message:"User registered successfully"};
     } catch (error) {
         console.error('Error registering user:', error.message);
-        throw error;
+        return {success:false, message:"User does not registered!"};
     }
 };
 
@@ -18,13 +18,16 @@ const registerUser = async (email, password, name) => {
 const loginUser = async (email, password) => {
     try {
         const session = await account.createEmailPasswordSession(email, password);
-        console.log('User logged in:', session);
-        return session;
+        console.log('User logged in');
+        return {success:true, message:"User logged in successfully", data: session}
     } catch (error) {
         console.error('Error logging in:', error.message);
-        throw error;
+        return {success:false, message:"Email or password might be wrong. Please try again!"}
     }
-};
+}; 
+
+
 
 // Export functions
 module.exports = { registerUser, loginUser };
+ 
