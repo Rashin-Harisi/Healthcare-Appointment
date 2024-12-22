@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", async() => {
       });
     });
   
-    form.addEventListener("submit",(e)=>{
+    form.addEventListener("submit",async(e)=>{
       e.preventDefault();
       const form = e.target
       const data = {
@@ -100,7 +100,8 @@ document.addEventListener("DOMContentLoaded", async() => {
           date : form.date.value,
           time: form.time.value, 
       }
-      console.log("data",data);
+      const response= await window.api.sendPatientDetails(data)
+      console.log(response);
     })
 
     registration_form.addEventListener("submit", async(e) => {

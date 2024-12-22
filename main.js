@@ -1,7 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('node:path')
 const { registerUser, loginUser } = require('./auth');
-const { createDocument, getDocuments } = require('./db');
 const sqlite3 = require("sqlite3").verbose();
 
 
@@ -14,7 +13,31 @@ const db = new sqlite3.Database(dbPath, (error) => {
   }
 });
 
+db.run(`CREATE TABLE IF NOT EXISTS patients(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  insurance INTEGER,
+  doctor TEXT,
+  service TEXT,
+  date TEXT,
+  time TEXT
+  )`)
+ 
 
+  ipcMain.handle("sendPatientDetails", async(event, arg)=>{
+    const {patient_name,insurance_number,doctor_name,service,date,time} = arg;
+      return await new Promise((resolve,reject)=>{
+        db.run(`INSERT INTO patients (name,insurance,doctor,service,date,time) VALUES (?,?,?,?,?,?)`, [patient_name,insurance_number,doctor_name,service,date,time],function(error){
+          if(error){
+            reject(error)
+          }else{
+            id = this.lastID;
+            arg.id = id;
+            resolve({success: true, message:"Patient's info is stored successfully.", data:arg})
+          }
+        })
+      })
+  })
 const createWindow = () => {
     const win = new BrowserWindow({
       width: 800,

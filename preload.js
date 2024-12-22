@@ -4,5 +4,5 @@ contextBridge.exposeInMainWorld(
   'api',{
     registerUser : (data)=> ipcRenderer.invoke("registerUser",data),
     loginUser: (data)=> ipcRenderer.invoke("loginUser", data),
-    logout:()=> ipcRenderer.invoke("logout")
+    sendPatientDetails : (data) => ipcRenderer.invoke("sendPatientDetails", data)
   })
