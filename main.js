@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('node:path')
 const { registerUser, loginUser } = require('./auth');
+const {getDocuments} = require('./db')
 const sqlite3 = require("sqlite3").verbose();
 
 
@@ -38,6 +39,19 @@ db.run(`CREATE TABLE IF NOT EXISTS patients(
         })
       })
   })
+
+  ipcMain.handle("getPatientList",(event,arg)=>{
+    return new Promise((resolve, reject)=>{
+      db.all(`SELECT id,name,insurance,doctor,service,date,time FROM patients`,[],(error,rows)=>{
+        if(error){
+          reject(error)
+        }else{
+          resolve({success:true,rows})
+        }
+      })
+
+    })
+  })
 const createWindow = () => {
     const win = new BrowserWindow({
       width: 800,
@@ -70,16 +84,7 @@ ipcMain.handle("loginUser", async(event,arg)=>{
 }
 })
 
-
-
-  async function checkDatabase(){
-    //await registerUser('user@example.com', 'password123', 'John Doe');
-    //const session = await loginUser('user@example.com', 'password123');
-    console.log('User session:', session);
-  }
-  
-
-
+ 
   app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
   })
