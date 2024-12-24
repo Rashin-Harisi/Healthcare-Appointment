@@ -25,7 +25,7 @@ const registerUser = async (email, password, name) => {
     return {
       success: true,
       message: "User registered successfully",
-      data: result,
+      data: userProfiles.name,
     };
   } catch (error) {
     console.error("Error registering user:", error.message);

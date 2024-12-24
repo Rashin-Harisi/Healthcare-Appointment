@@ -4,7 +4,7 @@ const { registerUser, loginUser } = require('./auth');
 const {getDocuments} = require('./db')
 const sqlite3 = require("sqlite3").verbose();
 
-
+let user;
 const dbPath = path.join(__dirname, "database.sqlite");
 const db = new sqlite3.Database(dbPath, (error) => {
   if (error) {
@@ -21,14 +21,19 @@ db.run(`CREATE TABLE IF NOT EXISTS patients(
   doctor TEXT,
   service TEXT,
   date TEXT,
-  time TEXT
+  time TEXT,
+  user TEXT,
+  date_of_register TEXT
   )`)
  
 
   ipcMain.handle("sendPatientDetails", async(event, arg)=>{
     const {patient_name,insurance_number,doctor_name,service,date,time} = arg;
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+    const format_date= date.toLocaleString('en-US', options);
+    const date_of_register= new Date().toLocaleString('en-US', options);
       return await new Promise((resolve,reject)=>{
-        db.run(`INSERT INTO patients (name,insurance,doctor,service,date,time) VALUES (?,?,?,?,?,?)`, [patient_name,insurance_number,doctor_name,service,date,time],function(error){
+        db.run(`INSERT INTO patients (name,insurance,doctor,service,date,time,user,date_of_register) VALUES (?,?,?,?,?,?,?,?)`, [patient_name,insurance_number,doctor_name,service,format_date,time,user,date_of_register],function(error){
           if(error){
             reject(error)
           }else{
@@ -68,6 +73,7 @@ const createWindow = () => {
     const {name,email,password} = arg
     try {
       const response = await registerUser(email,password,name)
+      user = response.data
       return response 
     }catch (error) {
       return {success: false, message: "Something went wrong in registering process." }
@@ -78,10 +84,26 @@ ipcMain.handle("loginUser", async(event,arg)=>{
   const {email,password} = arg
   try {
     const response = await loginUser(email,password)
+    user = response.data
     return response 
   }catch (error) {
     return {success: false, message: "Something went wrong in registering process." }
 }
+})
+
+ipcMain.handle("checkTime", async(event,arg)=>{
+  const {time:time_check,doctor_name} = arg
+  const patients_list_time = await new Promise((resolve,reject)=>{
+    db.run(`SELECT date,time FROM patients WHERE doctor=?`,[doctor_name],(error)=>{
+      if(error){
+        reject(error)
+      }else{
+        resolve()
+      }
+    })
+  })
+  console.log(patients_list_time);
+
 })
 
  

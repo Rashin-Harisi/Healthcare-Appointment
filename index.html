@@ -232,7 +232,7 @@
         <ul id="doctorsList"></ul>
       </div>
       <div id="main" class="w-[80vw]">
-        <div id="form" class="w-[100%] h-[100%] overflow-auto">
+        <div id="form" class="w-[100%] h-[100%] overflow-auto hidden">
           <form class="flex flex-col gap-[100px] ">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-5 w-[85%] mx-auto mt-[25px] overflow-auto">
               <fieldset class="border w-[350px]">
@@ -291,18 +291,21 @@
             <button type="submit" id="submitButton" class="border rounded-full w-[350px] mx-auto h-[50px]">Submit</button>
           </form>
         </div>
-        <div id="tables" class="w-[100%] h-[100%] overflow-auto hidden">
-          <table class="w-[90%] mx-auto mt-[15px]">
-            <tr class="border">
-              <th class="w-[150px]">Name</th>
-              <th>Insurance N.</th>
-              <th>Folder N.</th>
-              <th>Doctor Name</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th class="w-[150px]">Service</th>
-              <th>Edit / Cancel</th>
-            </tr>
+        <div id="tables" class="w-[100%] h-[100%] overflow-auto overflow-x-auto ">
+          <table id="patientsList" class="w-[90%] mx-auto mt-[15px]">
+            <thead>
+              <tr class="border">
+                <th class="w-[150px]">Name</th>
+                <th>Insurance N.</th>
+                <th>Folder N.</th>
+                <th>Doctor Name</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th class="w-[150px]">Service</th>
+                <th>Edit / Cancel</th>
+              </tr>
+            </thead>
+            <tbody id="patientsBody"></tbody>
           </table>
         </div>
       </div>
