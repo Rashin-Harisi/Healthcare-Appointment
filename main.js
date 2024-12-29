@@ -91,21 +91,37 @@ ipcMain.handle("loginUser", async(event,arg)=>{
 }
 })
 
-ipcMain.handle("checkTime", async(event,arg)=>{
-  const {time:time_check,doctor_name} = arg
-  const patients_list_time = await new Promise((resolve,reject)=>{
-    db.run(`SELECT date,time FROM patients WHERE doctor=?`,[doctor_name],(error)=>{
+ipcMain.handle("editData",async(event,arg)=>{
+  const {patient_name,insurance_number,doctor_name,service,date,time} = arg.data;
+  const id = arg.id;
+  const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+  const format_date= date.toLocaleString('en-US', options);
+  const date_of_register= new Date().toLocaleString('en-US', options);
+  return await new Promise((resolve, reject)=>{
+    db.run(`UPDATE patients SET name=?,insurance=?,doctor=?,service=?,date=?,time=?,user=?,date_of_register=? WHERE id=?`,
+      [patient_name,insurance_number,doctor_name,service,format_date,time,user,date_of_register,id],(error)=>{
       if(error){
         reject(error)
       }else{
-        resolve()
+        resolve({success: true, message:"Data is edited successfully"})
       }
     })
   })
-  console.log(patients_list_time);
-
+ 
 })
 
+ipcMain.handle("cancel", async(event,arg)=>{
+  const id = arg;
+  return await new Promise((resolve,reject)=>{
+    db.run(`DELETE FROM patients WHERE id=?`,[id],(error)=>{
+      if (error){
+        reject(error)
+      }else{
+        resolve({success:true, message: "Appointment is canceled successfully."})
+      }
+    })
+  })
+})
  
   app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
@@ -117,4 +133,4 @@ ipcMain.handle("checkTime", async(event,arg)=>{
     app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
-  })
+  }) 

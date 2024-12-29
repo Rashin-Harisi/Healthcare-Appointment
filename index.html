@@ -15,7 +15,7 @@
 <body
     class="text-white bg-black w-[90vw] h-[90vh] m-auto mt-6 border border-dashed"
   >
-    <div id="formContainer" class="w-full h-full ">
+    <div id="formContainer" class="w-full h-full hidden">
       <div class="flex justify-center items-center gap-2 mt-4">
         <svg
           version="1.1"
@@ -209,7 +209,7 @@
         </p>
       </form>
     </div>
-    <div id="appContainer" class="w-full h-full flex hidden">
+    <div id="appContainer" class="w-full h-full flex">
       <div
         id="leftMenu"
         class="w-[20%] border-r flex flex-col h-full text-center"
@@ -233,7 +233,8 @@
       </div>
       <div id="main" class="w-[80vw]">
         <div id="form" class="w-[100%] h-[100%] overflow-auto hidden">
-          <form class="flex flex-col gap-[100px] ">
+          <form id="formSubmit" class="flex flex-col gap-[100px] ">
+            <p>Submit Form</p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-5 w-[85%] mx-auto mt-[25px] overflow-auto">
               <fieldset class="border w-[350px]">
                 <legend class="px-2">Patient Name</legend>

@@ -3,8 +3,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const link_registration = document.getElementById("registration");
   const login_form = document.getElementById("loginForm");
   const link_login = document.getElementById("login");
-  const register_button = document.getElementById("registerButton");
-  const login_button = document.getElementById("loginButton");
   const form_container = document.getElementById("formContainer");
   const app_container = document.getElementById("appContainer");
   const user_info = document.getElementById("userInfo");
@@ -13,10 +11,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const patients_list = document.getElementById("patientsList");
   const tables = document.getElementById("tables");
   const form = document.getElementById("form");
+  const form_submit = document.getElementById("formSubmit");
   const appointment_form = document.getElementById("appointmentForm");
   const doctors_options = document.getElementById("doctorsOption");
   const service_options = document.getElementById("serviceOption");
   const patients_table = document.getElementById("patientsBody");
+  const submit_button = document.getElementById("submitButton");
 
   ths.forEach((th) => th.classList.add("border"));
 
@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     addDataToTable(patient);
   });
 
+  let id_data_edit;
 
   const doctors_services = [
     {
@@ -65,21 +66,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     )
     .join("");
 
-
-
-    const li_items = document.querySelectorAll("li")
-    li_items.forEach((li)=>{
-      li.addEventListener("click",async()=>{
-        const doctor_name = li.innerText.replace(/^Dr\. /, "")
-        const patientsList = await window.api.getPatientList();
-        const list = patientsList.rows.filter(patient=> patient.doctor === doctor_name)
-        patients_table.innerHTML= ""
-        list.forEach((item)=>{addDataToTable(item)})          
-        })
-      })
-    
-    
-    //console.log("doctor_add_event",doctor_add_event);
+  const li_items = document.querySelectorAll("li");
+  li_items.forEach((li) => {
+    li.addEventListener("click", async () => {
+      const doctor_name = li.innerText.replace(/^Dr\. /, "");
+      const patientsList = await window.api.getPatientList();
+      const list = patientsList.rows.filter(
+        (patient) => patient.doctor === doctor_name
+      );
+      patients_table.innerHTML = "";
+      list.forEach((item) => {
+        addDataToTable(item);
+      });
+    });
+  });
 
   doctors_options.innerHTML = doctors_services
     .map(
@@ -101,8 +101,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
   });
 
-  patients_list.addEventListener("click",async () => {
-    patients_table.innerHTML=""
+  patients_list.addEventListener("click", async () => {
+    patients_table.innerHTML = "";
     const patientsList = await window.api.getPatientList();
     patientsList.rows.forEach((patient) => {
       addDataToTable(patient);
@@ -123,7 +123,49 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
-  form.addEventListener("submit", async (e) => {
+  tables.addEventListener("click", async function (event) {
+    if (event.target && event.target.id === "edit") {
+      form.classList.remove("hidden");
+      tables.classList.add("hidden");
+      const row = event.target.closest("tr");
+      const rowData = Array.from(row.cells).map((cell) => cell.textContent);
+      const id = +rowData[2];
+      const patientsList = await window.api.getPatientList();
+      const patient_data = patientsList.rows.filter(
+        (patient) => patient.id === id
+      );
+      id_data_edit = id;
+      form_submit.patientName.value = patient_data[0].name;
+      form_submit.insuranceNumber.value = patient_data[0].insurance;
+      form_submit.doctorsOption.value = patient_data[0].doctor;
+      form_submit.serviceOption.value = patient_data[0].service;
+      form_submit.date.value = patient_data[0].date;
+      form_submit.time.value = patient_data[0].time;
+      submit_button.innerText = "Edit";
+      console.log("id", id_data_edit);
+    }
+  });
+
+  tables.addEventListener("click", async function (event) {
+    if (event.target && event.target.id === "cancel") {
+      const row = event.target.closest("tr");
+      const rowData = Array.from(row.cells).map((cell) => cell.textContent);
+      const id = +rowData[2];
+      const response = await window.api.cancel(id);
+      if (response.success) {
+        console.log(response.message);
+        patients_table.innerHTML = "";
+        const patientsList = await window.api.getPatientList();
+        patientsList.rows.forEach((patient) => {
+          addDataToTable(patient);
+        });
+      }else{
+        console.log("Error in canceling process!");
+      }
+    }
+  });
+
+  form_submit.addEventListener("submit", async (e) => {
     e.preventDefault();
     const form = e.target;
     const data = {
@@ -134,37 +176,42 @@ document.addEventListener("DOMContentLoaded", async () => {
       date: form.date.value,
       time: form.time.value,
     };
-    const patient_list_of_doctor = patientsList.rows.filter(
-      (patient) => patient.doctor === form.doctorsOption.value
-    );
-    const time_list = patient_list_of_doctor.filter(
-      (patient) => patient.date === form.date.value
-    );
-    const check_time = time_list.filter(
-      (patient) => patient.time === form.time.value
-    );
-    if (check_time.length !== 0) {
-      alert("The time is unavailable. Please try again.");
-    } else {
-      const response = await window.api.sendPatientDetails(data);
-      if (response.success) {
-        addDataToTable({
-          name: response.data.patient_name,
-          id: response.data.id,
-          doctor: response.data.doctor_name,
-          service: response.data.service,
-          time: response.data.time,
-          date: response.data.date,
-          insurance: response.data.insurance_number,
-        });
-        form.patientName.value = "";
-        form.insuranceNumber.value = "";
-        form.doctorsOption.value = "";
-        form.serviceOption.value = "";
-        form.date.value = "";
-        form.time.value = "";
+    if (submit_button.innerText === "Submit") {
+      const patient_list_of_doctor = patientsList.rows.filter(
+        (patient) => patient.doctor === form.doctorsOption.value
+      );
+      const time_list = patient_list_of_doctor.filter(
+        (patient) => patient.date === form.date.value
+      );
+      const check_time = time_list.filter(
+        (patient) => patient.time === form.time.value
+      );
+      if (check_time.length !== 0) {
+        alert("The time is unavailable. Please try again.");
       } else {
-        console.log("Error in setting appointment, please try again");
+        const response = await window.api.sendPatientDetails(data);
+        if (response.success) {
+          addDataToTable({
+            name: response.data.patient_name,
+            id: response.data.id,
+            doctor: response.data.doctor_name,
+            service: response.data.service,
+            time: response.data.time,
+            date: response.data.date,
+            insurance: response.data.insurance_number,
+          });
+          resetForm();
+        } else {
+          console.log("Error in setting appointment, please try again");
+        }
+      }
+    } else {
+      const response = await window.api.editData({ data, id: id_data_edit });
+      if (response.success) {
+        console.log(response.message);
+        resetForm();
+      } else {
+        console.log("Error in updating process!");
       }
     }
   });
@@ -227,6 +274,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     login_form.classList.add("hidden");
     registration_form.classList.remove("hidden");
   });
+
+  const resetForm = async () => {
+    form_submit.patientName.value = "";
+    form_submit.insuranceNumber.value = "";
+    form_submit.doctorsOption.value = "";
+    form_submit.serviceOption.value = "";
+    form_submit.date.value = "";
+    form_submit.time.value = "";
+    id_data_edit = null;
+    submit_button.innerText = "Submit";
+    form.classList.add("hidden");
+    tables.classList.remove("hidden");
+    patients_table.innerHTML = "";
+    const patientsList = await window.api.getPatientList();
+    patientsList.rows.forEach((patient) => {
+      addDataToTable(patient);
+    });
+  };
 
   function addDataToTable(data) {
     const newRow = document.createElement("tr");
