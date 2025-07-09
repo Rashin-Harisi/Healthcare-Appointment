@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const submit_button = document.getElementById("submitButton");
 
   ths.forEach((th) => th.classList.add("border"));
+  ths.forEach((th) => th.classList.add("border-black"));
+
 
   const patientsList = await window.api.getPatientList();
   patientsList.rows.forEach((patient) => {
@@ -62,7 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   doctors_list.innerHTML = doctors_services
     .map(
       (doctor) =>
-        `<li class="h-[40px] cursor-pointer border-b flex justify-center items-center" id="${doctor.name}">Dr. ${doctor.name}</li>`
+        `<li class="h-[40px] cursor-pointer border-b border-black flex justify-center items-center" id="${doctor.name}">Dr. ${doctor.name}</li>`
     )
     .join("");
 
@@ -296,14 +298,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   function addDataToTable(data) {
     const newRow = document.createElement("tr");
     newRow.innerHTML = `
-        <td class="border border-gray-300 pl-2">${data.name}</td>
-        <td class="border border-gray-300 pl-2">${data.insurance}</td>
-        <td class="border border-gray-300 pl-2">${data.id}</td>
-        <td class="border border-gray-300 pl-2">${data.doctor}</td>
-        <td class="border border-gray-300 pl-2">${data.date}</td>
-        <td class="border border-gray-300 pl-2">${data.time}</td>
-        <td class="border border-gray-300 pl-2">${data.service}</td>
-        <td class="border border-gray-300 text-center"><a href="#" id="edit">Edit</a> / <a href="#" id="cancel">Cancel</a></td>
+        <td class="border border-black pl-2">${data.name}</td>
+        <td class="border border-black pl-2">${data.insurance}</td>
+        <td class="border border-black pl-2">${data.id}</td>
+        <td class="border border-black pl-2">${data.doctor}</td>
+        <td class="border border-black pl-2">${data.date}</td>
+        <td class="border border-black pl-2">${data.time}</td>
+        <td class="border border-black pl-2">${data.service}</td>
+        <td class="border border-black text-center"><a href="#" id="edit">Edit</a> / <a href="#" id="cancel">Cancel</a></td>
       `;
     patients_table.appendChild(newRow);
   }

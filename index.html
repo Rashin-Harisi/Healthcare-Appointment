@@ -13,10 +13,11 @@
     <title>Clinic Health</title>
 </head>
 <body
-    class="text-white bg-black w-[90vw] h-[90vh] m-auto mt-6 border border-dashed"
+    class="w-full h-full p-5 text-black border-black borde-2"
   >
-    <div id="formContainer" class="w-full h-full hidden">
-      <div class="flex justify-center items-center gap-2 mt-4">
+  <div class="absolute inset-0 bg-[url('background.jpg')] bg-cover bg-center opacity-30 -z-10"></div>
+    <div id="formContainer" class="w-full h-full ">
+      <div class="flex items-center justify-center gap-2 mt-4">
         <svg
           version="1.1"
           id="Layer_1"
@@ -114,7 +115,7 @@
         class="flex flex-col gap-4 w-[700px] mx-auto mt-[50px]"
         id="RegistrationForm"
       >
-        <fieldset class="border">
+        <fieldset class="border border-black">
           <legend class="pl-1 pr-1">Registration From</legend>
           <fieldset class="w-[500px] ml-[100px]">
             <legend>Name</legend>
@@ -158,7 +159,7 @@
           You've already registered,
           <a
             href="#"
-            class="text-blue-500 hover:text-blue-700 underline"
+            class="text-blue-500 underline hover:text-blue-700"
             id="registration"
             >click here.</a
           >
@@ -168,7 +169,7 @@
         class="flex flex-col gap-4 w-[700px] mx-auto mt-[50px] hidden"
         id="loginForm"
       >
-        <fieldset class="border">
+        <fieldset class="border border-black">
           <legend class="pl-1 pr-1">Login From</legend>
           <fieldset class="w-[500px] ml-[100px]">
             <legend>Email</legend>
@@ -202,31 +203,31 @@
           You've not registered yet',
           <a
             href="#"
-            class="text-blue-500 hover:text-blue-700 underline"
+            class="text-blue-500 underline hover:text-blue-700"
             id="login"
             >click here.</a
           >
         </p>
       </form>
     </div>
-    <div id="appContainer" class="w-full h-full flex">
+    <div id="appContainer" class="flex hidden w-full h-full">
       <div
         id="leftMenu"
-        class="w-[20%] border-r flex flex-col h-full text-center"
+        class="w-[20%] border-r border-black flex flex-col h-full text-center"
       >
-        <p class="h-[80px] border-b flex justify-center items-center">
+        <p class="h-[80px] border-b  border-black flex justify-center items-center">
           User <span id="userInfo" class="ml-[5px]"></span>
         </p>
         <a
           href="#"
           id="appointmentForm"
-          class="h-[60px] border-b flex justify-center items-center"
+          class="h-[60px] border-b  border-black flex justify-center items-center"
           >Appointment</a
         >
         <a
           href="#"
           id="patientsList"
-          class="h-[60px] border-b flex justify-center items-center"
+          class="h-[60px] border-b  border-black flex justify-center items-center"
           >All Patients</a
         >
         <ul id="doctorsList"></ul>
@@ -234,9 +235,9 @@
       <div id="main" class="w-[80vw]">
         <div id="form" class="w-[100%] h-[100%] overflow-auto hidden">
           <form id="formSubmit" class="flex flex-col gap-[100px] ">
-            <p>Submit Form</p>
+            <p class="px-5 text-center">Submit Form</p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-5 w-[85%] mx-auto mt-[25px] overflow-auto">
-              <fieldset class="border w-[350px]">
+              <fieldset class="border  border-black w-[350px]">
                 <legend class="px-2">Patient Name</legend>
                 <input
                   type="text"
@@ -246,7 +247,7 @@
                   class="w-[330px] ml-[10px] mb-[10px] text-black"
                 />
               </fieldset>
-              <fieldset class="border w-[350px]">
+              <fieldset class="border  border-black w-[350px]">
                 <legend class="px-2">Insurance Number</legend>
                 <input
                   type="number"
@@ -256,21 +257,21 @@
                   class="w-[330px] ml-[10px] mb-[10px] text-black"
                 />
               </fieldset>
-              <fieldset class="border w-[350px]">
+              <fieldset class="border  border-black w-[350px]">
                 <legend class="px-2">Doctor</legend>
                 <select
                   id="doctorsOption"
                   class="ml-[10px] mb-[10px] w-[330px] text-black"
                 ></select>
               </fieldset>
-              <fieldset class="border w-[350px]">
+              <fieldset class="border  border-black w-[350px]">
                 <legend class="px-2">Service</legend>
                 <select
                   id="serviceOption"
                   class="ml-[10px] mb-[10px] w-[330px] text-black"
                 ></select>
               </fieldset>
-              <fieldset class="border w-[350px]">
+              <fieldset class="border  border-black w-[350px]">
                 <legend class="px-2">Date</legend>
                 <input
                   type="text"
@@ -279,7 +280,7 @@
                   class="w-[330px] ml-[10px] mb-[10px] text-black"
                 />
               </fieldset>
-              <fieldset class="border w-[350px]">
+              <fieldset class="border  border-black w-[350px]">
                 <legend class="px-2">Time</legend>
                 <input
                   type="time"
@@ -289,13 +290,13 @@
                 />
               </fieldset>
             </div>
-            <button type="submit" id="submitButton" class="border rounded-full w-[350px] mx-auto h-[50px]">Submit</button>
+            <button type="submit" id="submitButton" class="border  border-black rounded-full w-[350px] mx-auto h-[50px]">Submit</button>
           </form>
         </div>
         <div id="tables" class="w-[100%] h-[100%] overflow-auto overflow-x-auto ">
           <table id="patientsList" class="w-[90%] mx-auto mt-[15px]">
             <thead>
-              <tr class="border">
+              <tr class="border border-black">
                 <th class="w-[150px]">Name</th>
                 <th>Insurance N.</th>
                 <th>Folder N.</th>
